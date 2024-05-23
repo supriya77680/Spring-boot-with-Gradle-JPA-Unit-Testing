@@ -28,42 +28,53 @@ private static final Logger logger = LoggerFactory.getLogger(DemoController.clas
     DemoService demoService;
 
     @GetMapping("/hello")
-    public String check(){
+    public ResponseEntity<String> check(){
     logger.info("The app is running");
-    return "Hello";
+    return ResponseEntity.ok("Hello");
    }
 
    @PostMapping("/save")
-   public Demo create(@RequestBody Demo demo){
+   public ResponseEntity<Demo> create(@RequestBody Demo demo){
     logger.info("The user is created : {}", demo);
-    return demoService.create(demo);
+      Demo createdUser = demoService.create(demo);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    
    }
 
    @GetMapping("/getAll")
-   public List<Demo> getAll(){
+   public ResponseEntity<List<Demo>> getAll(){
     logger.info("Got details of all users");
-    return demoService.getAll();
+    List<Demo> getAllDemo = demoService.getAll();
+    return ResponseEntity.status(HttpStatus.FOUND).body(getAllDemo);
    }
 
    @DeleteMapping("/delete/{id}")
-   public String delete(@PathVariable Long id){
+   public ResponseEntity<String> delete(@PathVariable Long id){
     logger.info("Deleted the user with given id");
-    demoService.delete(id);
-    return "Deleted the user with id " + id;
+      demoService.delete(id);
+      return ResponseEntity.ok("Deleted the user with id " + id);
+   
    }
 
     @PutMapping("/update/{id}")
-    public Demo updateDemo(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("city") String city, @RequestParam("company") String company) {
+    public ResponseEntity<Demo> updateDemo(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("city") String city, @RequestParam("company") String company) {
      logger.info("The user is updated as id {} name {}, city {}, company {}" ,id, name, city, company);
-        Demo updateDemo = new Demo(id, name, city, company);
-      return demoService.updateDemo(updateDemo);
-        
+      Demo updateDemo = new Demo(id, name, city, company);
+      Demo updatedDemo =  demoService.updateDemo(updateDemo);
+      return ResponseEntity.status(HttpStatus.OK).body(updatedDemo); 
     }
 
     @PatchMapping("/patch-name/{id}")
      public ResponseEntity<Demo> patchName(@PathVariable Long id, @RequestParam("name") String name) {
         logger.info("The name of user is updated as id {} name {}",id, name);
-        Demo patchName = demoService.patchName(id, name);
-        return new ResponseEntity<>(patchName, HttpStatus.OK);
+          Demo patchName = demoService.patchName(id, name);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(patchName);
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<Demo> getById(@PathVariable Long id){
+      logger.info("Got user by Id id {}",id);
+        Demo demo = demoService.getById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(demo);
     }
 }

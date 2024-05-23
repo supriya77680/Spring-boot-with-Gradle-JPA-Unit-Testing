@@ -3,7 +3,9 @@ package com.bnt.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
+import com.bnt.exception.UserNotFoundException;
 import com.bnt.model.Demo;
 import com.bnt.repository.DemoRepository;
 
@@ -21,21 +23,39 @@ public class DemoService {
         return demoRepository.findAll();
     }
 
-    public void delete(Long id){
-    demoRepository.deleteById(id);
+    public void delete(Long id) {
+        if (!demoRepository.existsById(id)) {
+            throw new UserNotFoundException("User not found with id: " + id, id);
+        }
+        demoRepository.deleteById(id);
     }
+    
 
     public Demo updateDemo(Demo demo) {
+        Long id = demo.getId();
+        if (!demoRepository.existsById(id)) {
+            throw new UserNotFoundException("User not found with id: " + id, id);
+        }
         return demoRepository.save(demo);
     }
 
     public Demo patchName(Long id, String name) {
         Demo existingDemo = demoRepository.findById(id).orElse(null);
         if (existingDemo == null) {
-            return null;
+            throw new UserNotFoundException("User not found with id: " + id, id);
         }
         existingDemo.setName(name);
         return demoRepository.save(existingDemo);
     }
+
+    public Demo getById(Long id) {
+    Optional<Demo> optionalDemo = demoRepository.findById(id);
+    if (optionalDemo.isPresent()) {
+        return optionalDemo.get();
+    } else {
+        throw new UserNotFoundException("User not found with id: " + id, id);
+    }
+}
+
     
 }
