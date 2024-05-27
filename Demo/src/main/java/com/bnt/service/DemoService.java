@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import com.bnt.exception.InvalidDataException;
 import com.bnt.exception.UserNotFoundException;
 import com.bnt.model.Demo;
 import com.bnt.repository.DemoRepository;
@@ -16,6 +17,11 @@ public class DemoService {
     DemoRepository demoRepository;
 
     public Demo create(Demo demo){
+        if (demo.getName() == null || demo.getName().isEmpty() ||
+            demo.getCity() == null || demo.getCity().isEmpty() ||
+             demo.getCompany() == null || demo.getCompany().isEmpty()) {
+        throw new InvalidDataException("Invalid data provided: Name, City, and Company must not be empty");
+    }
         return demoRepository.save(demo);
     }
 
