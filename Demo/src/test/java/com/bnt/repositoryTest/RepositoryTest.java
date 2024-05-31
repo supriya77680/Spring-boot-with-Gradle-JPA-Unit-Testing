@@ -26,7 +26,7 @@ public class RepositoryTest {
 
     @Test
     void testCreate(){
-        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT");
+        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT", null);
         when(demoRepository.save(expectedResult)).thenReturn(expectedResult);
         Demo actualResult = demoRepository.save(expectedResult);
         assertEquals(expectedResult, actualResult);
@@ -35,8 +35,8 @@ public class RepositoryTest {
     @Test
     void testGetAll(){
         List<Demo> expectedResult = new ArrayList<>();
-        expectedResult.add(new Demo(1L, "Supriya", "Vijaya", "BNT"));
-        expectedResult.add(new Demo(2L, "Vijaya", "Pune", "BNT"));
+        expectedResult.add(new Demo(1L, "Supriya", "Vijaya", "BNT", null));
+        expectedResult.add(new Demo(2L, "Vijaya", "Pune", "BNT", null));
         when(demoRepository.findAll()).thenReturn(expectedResult);
         List<Demo> actualResult = demoRepository.findAll();
         assertEquals(expectedResult, actualResult);
@@ -50,7 +50,7 @@ public class RepositoryTest {
 
     @Test
     void testUpdate(){
-        Demo expectedResult = new Demo(1L, "Sup", "Pune", "BNT");
+        Demo expectedResult = new Demo(1L, "Sup", "Pune", "BNT", null);
         when(demoRepository.save(expectedResult)).thenReturn(expectedResult);
         Demo actualResult = demoRepository.save(expectedResult);
         assertEquals(expectedResult, actualResult);
@@ -58,7 +58,7 @@ public class RepositoryTest {
 
     @Test
     void testGetById(){
-        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT");
+        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT", null);
         when(demoRepository.findById(1L)).thenReturn(Optional.of(expectedResult));
         Demo actualResult = demoRepository.findById(1L).orElse(null);
         assertEquals(expectedResult, actualResult);

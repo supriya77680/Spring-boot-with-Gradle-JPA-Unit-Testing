@@ -63,5 +63,8 @@ public class DemoService {
     }
 }
 
+public List<Object[]> findAllDemoInfo() {
+    return demoRepository.findAllDemoAndInfo();
+}
     
 }

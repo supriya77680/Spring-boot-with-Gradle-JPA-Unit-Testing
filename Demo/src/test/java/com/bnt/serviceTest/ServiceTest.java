@@ -40,7 +40,7 @@ public class ServiceTest {
 
     @Test
     void testCreate(){
-        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT");
+        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT", null);
         when(demoRepository.save(expectedResult)).thenReturn(expectedResult);
         Demo actualResult = demoService.create(expectedResult);
         assertEquals(expectedResult, actualResult);
@@ -49,8 +49,8 @@ public class ServiceTest {
     @Test
     void testGetAll(){
         List<Demo> expectedResult = new ArrayList<>();
-        expectedResult.add(new Demo (1L, "Supriya", "Pune", "BNT"));
-        expectedResult.add(new Demo (2L, "Vijaya", "Pune", "BNT"));
+        expectedResult.add(new Demo (1L, "Supriya", "Pune", "BNT", null));
+        expectedResult.add(new Demo (2L, "Vijaya", "Pune", "BNT", null));
         when(demoRepository.findAll()).thenReturn(expectedResult);
         List<Demo> actualResult = demoService.getAll();
         assertEquals(expectedResult, actualResult);
@@ -66,7 +66,7 @@ public class ServiceTest {
     @Test
     void testUpdate(){
         when(demoRepository.existsById(1L)).thenReturn(true);
-        Demo expectedResult = new Demo(1L, "Sup", "Pune", "BNT");
+        Demo expectedResult = new Demo(1L, "Sup", "Pune", "BNT", null);
         when(demoRepository.save(expectedResult)).thenReturn(expectedResult);
         Demo actualResult = demoService.updateDemo(expectedResult);
         assertEquals(expectedResult, actualResult);
@@ -88,7 +88,7 @@ public class ServiceTest {
 
     @Test
     void testGetById(){
-        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT");
+        Demo expectedResult = new Demo(1L, "Supriya", "Pune", "BNT", null);
         when(demoRepository.findById(1L)).thenReturn(Optional.of(expectedResult));
         Demo actualaresult = demoService.getById(1L);
         assertEquals(expectedResult, actualaresult);

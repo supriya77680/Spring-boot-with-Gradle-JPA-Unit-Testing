@@ -13,16 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Demo {
+public class Info {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String city;
-    private String company;
-
-    @OneToOne(mappedBy = "demo")
-    private Info info;
+    private int experience;
+    private int salary;
     
+    @OneToOne
+    private Demo demo;
 }

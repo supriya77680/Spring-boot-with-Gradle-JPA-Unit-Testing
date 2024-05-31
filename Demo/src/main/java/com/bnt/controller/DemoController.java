@@ -59,7 +59,7 @@ private static final Logger logger = LoggerFactory.getLogger(DemoController.clas
     @PutMapping("/update/{id}")
     public ResponseEntity<Demo> updateDemo(@PathVariable Long id, @RequestParam("name") String name, @RequestParam("city") String city, @RequestParam("company") String company) {
      logger.info("The user is updated as id {} name {}, city {}, company {}" ,id, name, city, company);
-      Demo updateDemo = new Demo(id, name, city, company);
+      Demo updateDemo = new Demo(id, name, city, company, null);
       Demo updatedDemo =  demoService.updateDemo(updateDemo);
       return ResponseEntity.status(HttpStatus.OK).body(updatedDemo); 
     }
@@ -76,5 +76,11 @@ private static final Logger logger = LoggerFactory.getLogger(DemoController.clas
       logger.info("Got user by Id id {}",id);
         Demo demo = demoService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(demo);
+    }
+
+    @GetMapping("/demo-info")
+    public ResponseEntity<List<Object[]>> getAllDemoInfo() {
+        List<Object[]> demoInfoList = demoService.findAllDemoInfo();
+        return ResponseEntity.status(HttpStatus.OK).body(demoInfoList);
     }
 }

@@ -1,7 +1,6 @@
 package com.bnt.controllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import com.bnt.controller.DemoController;
-import com.bnt.exception.InvalidDataException;
 import com.bnt.model.Demo;
 import com.bnt.repository.DemoRepository;
 import com.bnt.service.DemoService;
@@ -46,7 +44,7 @@ public class ControllerTest {
 
     @Test
     void testCreate() {
-        Demo demo = new Demo(1L, "Supriya", "Pune", "BNT");
+        Demo demo = new Demo(1L, "Supriya", "Pune", "BNT", null);
         ResponseEntity<Demo> expectedResult = ResponseEntity.status(HttpStatus.CREATED).body(demo);
         when(demoService.create(demo)).thenReturn(demo);
         ResponseEntity<Demo> actualResult = demoController.create(demo);
@@ -57,8 +55,8 @@ public class ControllerTest {
     @Test
     void testGetAll(){
        List<Demo> demo = new ArrayList<>();
-       demo.add(new Demo(1L, "Supriya", "Pune", "BNT"));
-       demo.add(new Demo(2L, "Vijaya", "Pune", "BNT"));
+       demo.add(new Demo(1L, "Supriya", "Pune", "BNT", null));
+       demo.add(new Demo(2L, "Vijaya", "Pune", "BNT", null));
        ResponseEntity<List<Demo>> expectedResult = ResponseEntity.status(HttpStatus.FOUND).body(demo);
        when(demoService.getAll()).thenReturn(demo);
        ResponseEntity<List<Demo>> actualResult = demoController.getAll();
@@ -77,7 +75,7 @@ public class ControllerTest {
 
     @Test
     void testUpdate(){
-        Demo demo = new Demo(1L, "Sup", "Pune", "BNT");
+        Demo demo = new Demo(1L, "Sup", "Pune", "BNT", null);
         ResponseEntity<Demo> expectedResult = ResponseEntity.status(HttpStatus.OK).body(demo);
         when(demoService.updateDemo(demo)).thenReturn(demo);
         ResponseEntity<Demo> actualResult = demoController.updateDemo(1L, "Sup", "Pune", "BNT");
@@ -97,7 +95,7 @@ public class ControllerTest {
 
     @Test
     void testGetById(){
-       Demo demo = new Demo(1L, "Supriya", "Pune", "BNT");
+       Demo demo = new Demo(1L, "Supriya", "Pune", "BNT", null);
         ResponseEntity <Demo> expectedResult = ResponseEntity.status(HttpStatus.OK).body(demo);
         when(demoService.getById(1L)).thenReturn(demo);
         ResponseEntity <Demo> actualaresult = demoController.getById(1L);
